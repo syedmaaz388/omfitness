@@ -1,0 +1,765 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>OM Fitness Galaxy Gym</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Big+Shoulders+Display:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a barbell of six Olympic plates is the day selector; the chosen day opens a lift sheet below it. */
+:root {
+  --bg: #ECEAE5;
+  --surface: #F7F6F3;
+  --ink: #1B1D1F;
+  --muted: #5B5F63;
+  --line: #CDCAC2;
+  --red: #C8281E;    --on-red: #FFFFFF;
+  --blue: #1F5FBF;   --on-blue: #FFFFFF;
+  --yellow: #D9A406; --on-yellow: #1B1D1F;
+  --green: #2A8048;  --on-green: #FFFFFF;
+  --grey: #6B7075;   --on-grey: #FFFFFF;
+  --black: #1B1D1F;  --on-black: #ECEAE5;
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131415;
+    --surface: #1B1D1F;
+    --ink: #EDEBE6;
+    --muted: #9A9EA3;
+    --line: #33363A;
+    --red: #E5483D;    --on-red: #131415;
+    --blue: #4C8DF0;   --on-blue: #131415;
+    --yellow: #F2C230; --on-yellow: #131415;
+    --green: #4FBF72;  --on-green: #131415;
+    --grey: #CFD2D6;   --on-grey: #131415;
+    --black: #EDEBE6;  --on-black: #131415;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131415;
+  --surface: #1B1D1F;
+  --ink: #EDEBE6;
+  --muted: #9A9EA3;
+  --line: #33363A;
+  --red: #E5483D;    --on-red: #131415;
+  --blue: #4C8DF0;   --on-blue: #131415;
+  --yellow: #F2C230; --on-yellow: #131415;
+  --green: #4FBF72;  --on-green: #131415;
+  --grey: #CFD2D6;   --on-grey: #131415;
+  --black: #EDEBE6;  --on-black: #131415;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.55 var(--body);
+}
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-block: 20px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Header */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+.logo {
+  font: 800 28px/1 var(--display);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo .mk { width: 46px; height: 46px; flex: none; }
+.logo .lt span { font-weight: 700; color: var(--muted); margin-left: .35em; }
+.cardio {
+  margin-top: 28px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border-left: 6px solid var(--a);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 24px;
+  align-items: center;
+}
+.cardio b { display: block; font: 500 11px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.cardio strong { display: block; margin-top: 4px; font: 800 28px/1.05 var(--display); letter-spacing: .02em; text-transform: uppercase; }
+.cardio p { grid-column: 1; margin: 4px 0 0; max-width: 60ch; }
+.cardio .mins { grid-column: 2; grid-row: 1 / span 2; font: 900 56px/.9 var(--display); text-align: right; }
+.cardio .mins small { display: block; font: 500 11px/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 560px) {
+  .cardio { grid-template-columns: minmax(0, 1fr); }
+  .cardio .mins { grid-column: 1; grid-row: auto; text-align: left; }
+}
+.hours {
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Hero */
+.hero { padding-block: 40px 8px; }
+h1 {
+  margin: 0;
+  font: 900 clamp(52px, 11vw, 112px)/.9 var(--display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.hero p {
+  margin: 18px 0 0;
+  max-width: 52ch;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+/* Barbell selector */
+.bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-block: 32px 8px;
+  padding-block: 20px;
+}
+.bar::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 8px;
+  transform: translateY(-50%);
+  background: var(--line);
+  border-radius: 4px;
+}
+.plate {
+  position: relative;
+  width: clamp(46px, 11.5vw, 84px);
+  height: var(--h);
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: var(--a);
+  color: var(--on);
+  font: 800 clamp(15px, 3.6vw, 22px)/1 var(--display);
+  letter-spacing: .08em;
+  cursor: pointer;
+  opacity: .6;
+}
+.plate::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 10px;
+  width: 8px; height: 8px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--on);
+  opacity: .35;
+}
+.plate[aria-selected="true"] {
+  opacity: 1;
+  outline: 3px solid var(--ink);
+  outline-offset: 4px;
+}
+.plate:hover { opacity: 1; }
+.plate:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; opacity: 1; }
+.plate .today {
+  position: absolute;
+  bottom: 8px; left: 50%;
+  transform: translateX(-50%);
+  font: 500 9px/1 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.d-mon { --a: var(--red);    --on: var(--on-red);    --h: 132px; }
+.d-tue { --a: var(--blue);   --on: var(--on-blue);   --h: 120px; }
+.d-wed { --a: var(--yellow); --on: var(--on-yellow); --h: 108px; }
+.d-thu { --a: var(--green);  --on: var(--on-green);  --h: 96px; }
+.d-fri { --a: var(--grey);   --on: var(--on-grey);   --h: 84px; }
+.d-sat { --a: var(--black);  --on: var(--on-black);  --h: 72px; }
+
+/* Day sheet */
+.sheet {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 2px solid var(--ink);
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 13px/1 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.swatch {
+  width: 14px; height: 30px;
+  border-radius: 4px;
+  background: var(--a);
+  flex: none;
+}
+.focus {
+  margin: 10px 0 0;
+  font: 900 clamp(44px, 10.5vw, 120px)/.9 var(--display);
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.facts li { min-width: 0; }
+.facts b {
+  display: block;
+  font: 500 11px/1.2 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.facts span { font-size: 17px; font-weight: 600; }
+
+.warm {
+  margin: 28px 0 0;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-left: 6px solid var(--a);
+  max-width: 70ch;
+}
+.warm b {
+  font: 500 11px/1.2 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+/* Lift list */
+.progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 32px;
+}
+.progress .count { font: 700 14px/1 var(--mono); letter-spacing: .04em; }
+.meter {
+  flex: 1 1 160px;
+  height: 8px;
+  background: var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.meter i { display: block; height: 100%; width: 0; background: var(--a); }
+.reset {
+  font: 500 12px/1 var(--mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.reset:hover { border-color: var(--ink); }
+.reset:focus-visible, .row input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+.cols, .row {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 112px 84px;
+  gap: 0 16px;
+  align-items: center;
+}
+.cols {
+  margin-top: 16px;
+  padding: 0 0 8px;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--ink);
+}
+.lifts { margin: 0; padding: 0; list-style: none; }
+.lifts li { border-bottom: 1px solid var(--line); }
+.row { padding: 16px 0; cursor: pointer; }
+.row input {
+  grid-area: chk;
+  width: 24px; height: 24px;
+  margin: 0;
+  accent-color: var(--a);
+  cursor: pointer;
+}
+.row .nm { min-width: 0; }
+.row .nm strong { display: block; font: 800 26px/1.05 var(--display); letter-spacing: .02em; text-transform: uppercase; }
+.row .nm em { display: block; margin-top: 4px; font-style: normal; font-size: 14px; color: var(--muted); }
+.row .sr, .row .rs { font: 700 15px/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+.row .rs { color: var(--muted); font-weight: 500; }
+.row.done .nm strong { text-decoration: line-through; text-decoration-thickness: 3px; color: var(--muted); }
+
+.note {
+  margin: 36px 0 0;
+  max-width: 62ch;
+  color: var(--muted);
+}
+
+/* Footer */
+.foot {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 2px solid var(--ink);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 40px;
+  justify-content: space-between;
+}
+.foot h2 { margin: 0; font: 800 28px/1 var(--display); letter-spacing: .04em; text-transform: uppercase; }
+.visit { font-style: normal; min-width: 0; }
+.visit p { margin: 10px 0 0; }
+.visit .tel { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font: 700 18px/1.2 var(--mono); }
+.visit a { color: var(--ink); font-weight: 600; text-underline-offset: 3px; }
+.visit a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.week { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0; padding: 0; list-style: none; font: 500 13px/1.6 var(--mono); }
+.week li { min-width: 0; }
+.week .off { color: var(--muted); }
+
+/* Diet chart + BMI */
+.nav { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.nav a { color: var(--ink); text-underline-offset: 4px; }
+.nav a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.sec { margin-top: 64px; padding-top: 28px; border-top: 2px solid var(--ink); }
+.sech { margin: 0; font: 900 clamp(56px, 13vw, 128px)/.9 var(--display); letter-spacing: .01em; text-transform: uppercase; }
+.lede { margin: 16px 0 0; max-width: 56ch; color: var(--muted); font-size: 18px; }
+.seg { display: inline-flex; margin-top: 24px; border: 2px solid var(--ink); border-radius: 10px; overflow: hidden; }
+.seg button { display: flex; align-items: center; gap: 10px; padding: 12px 20px; border: 0; background: transparent; color: var(--ink); font: 800 20px/1 var(--display); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--c); color: var(--on-c); }
+.seg button:focus-visible { outline: 3px solid var(--ink); outline-offset: -6px; }
+#dv { --c: var(--green); --on-c: var(--on-green); --mc: var(--green); }
+#dn { --c: var(--red); --on-c: var(--on-red); --mc: var(--red); }
+.mark { display: inline-grid; place-items: center; width: 18px; height: 18px; border: 2px solid var(--mc); background: var(--bg); flex: none; }
+.mark::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--mc); }
+.meals { margin: 28px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.meals li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 4px 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.meals .t { font: 700 14px/1.9 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.meals strong { display: block; font: 800 26px/1.05 var(--display); letter-spacing: .02em; text-transform: uppercase; }
+.meals .d { display: block; margin-top: 4px; max-width: 62ch; }
+.tips { margin: 28px 0 0; padding: 0 0 0 20px; max-width: 64ch; color: var(--muted); }
+.tips li { margin-bottom: 6px; }
+.bmi { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 32px 48px; margin-top: 28px; align-items: start; }
+.fld { display: block; margin-bottom: 16px; }
+.fld span { display: block; margin-bottom: 6px; font: 500 11px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.fld input { width: 100%; padding: 12px 14px; font: 700 22px/1 var(--mono); background: var(--surface); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; }
+.fld input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.eg { margin: 0; font-size: 14px; color: var(--muted); }
+.out { min-width: 0; }
+.out .num { font: 900 clamp(88px, 20vw, 168px)/.85 var(--display); font-variant-numeric: tabular-nums; }
+.out .cat { margin-top: 10px; font: 800 30px/1 var(--display); letter-spacing: .04em; text-transform: uppercase; }
+.out .msg { margin: 12px 0 0; max-width: 54ch; }
+.scale { position: relative; margin-top: 36px; padding-bottom: 28px; }
+.track { display: flex; height: 14px; border-radius: 7px; overflow: hidden; }
+.track i { display: block; height: 100%; }
+.s1 { width: 14%; background: var(--blue); }
+.s2 { width: 26%; background: var(--green); }
+.s3 { width: 20%; background: var(--yellow); }
+.s4 { width: 40%; background: var(--red); }
+.pin { position: absolute; top: -16px; left: 0; width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-top: 13px solid var(--ink); transform: translateX(-50%); }
+.tick { position: absolute; top: 22px; transform: translateX(-50%); font: 500 11px/1 var(--mono); color: var(--muted); }
+.disc { margin: 24px 0 0; max-width: 64ch; font-size: 14px; color: var(--muted); }
+@media (max-width: 700px) {
+  .bmi { grid-template-columns: minmax(0, 1fr); }
+  .meals li { grid-template-columns: minmax(0, 1fr); }
+  .meals .t { line-height: 1.2; }
+}
+
+@media (max-width: 560px) {
+  .hero { padding-top: 28px; }
+  .cols { display: none; }
+  .row {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    grid-template-areas: "chk nm nm" "chk sr rs";
+    gap: 8px 12px;
+  }
+  .row input { grid-area: chk; align-self: start; margin-top: 2px; }
+  .row .nm { grid-area: nm; }
+  .row .sr { grid-area: sr; }
+  .row .rs { grid-area: rs; justify-self: end; }
+  .row .nm strong { font-size: 24px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .plate { transition: opacity .15s; }
+  .meter i { transition: width .25s; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="logo">
+      <svg class="mk" viewBox="0 0 48 48" role="img" aria-label="OM Fitness Galaxy Gym logo">
+        <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="3"/>
+        <g transform="rotate(-35 24 24)">
+          <rect x="11" y="22" width="26" height="4" rx="2" fill="currentColor"/>
+          <rect x="14" y="14" width="5" height="20" rx="2" fill="var(--red)"/>
+          <rect x="29" y="14" width="5" height="20" rx="2" fill="var(--red)"/>
+          <rect x="8.5" y="18" width="4" height="12" rx="1.5" fill="currentColor"/>
+          <rect x="35.5" y="18" width="4" height="12" rx="1.5" fill="currentColor"/>
+        </g>
+      </svg>
+      <span class="lt">OM Fitness Galaxy<span>Gym</span></span>
+    </div>
+    <div class="hours">KK Puri Colony, Jhansi · Mon–Sat · Sunday closed</div>
+    <nav class="nav" aria-label="Sections"><a href="#sheet">Workouts</a><a href="#diet">Diet chart</a><a href="#bmi">BMI</a></nav>
+  </header>
+
+  <section class="hero">
+    <h1>Six days.<br>One split.</h1>
+    <p>Pick a plate to open that day's session. Chest and triceps, back and biceps, legs, shoulders, upper body, then lower body. Tick each lift off as you finish it.</p>
+  </section>
+
+  <div class="bar" role="tablist" aria-label="Training days" id="bar"></div>
+
+  <main id="sheet" class="sheet" role="tabpanel" aria-live="polite"></main>
+
+  <section class="sec" id="diet">
+    <h2 class="sech">Diet chart</h2>
+    <p class="lede">One sample day of eating for a training day. Choose veg or non-veg and follow the times.</p>
+    <div class="seg" role="group" aria-label="Diet type">
+      <button type="button" id="dv" aria-pressed="true"><i class="mark"></i>Veg</button>
+      <button type="button" id="dn" aria-pressed="false"><i class="mark"></i>Non-veg</button>
+    </div>
+    <ol class="meals" id="meals"></ol>
+    <ul class="tips">
+      <li>Drink 3 to 4 litres of water through the day.</li>
+      <li>If you train hard, aim for roughly 1.6 to 2.2 g of protein per kg of body weight.</li>
+      <li>Use less oil, and swap sugary drinks and fried snacks for fruit and roasted chana.</li>
+      <li>This is a general sample plan. If you have a medical condition, ask a doctor or dietitian before following it.</li>
+    </ul>
+  </section>
+
+  <section class="sec" id="bmi">
+    <h2 class="sech">BMI calculator</h2>
+    <p class="lede">Enter your weight and height to see your body mass index and a healthy weight range for your height.</p>
+    <div class="bmi">
+      <div>
+        <label class="fld"><span>Weight (kg)</span><input id="wt" type="number" inputmode="decimal" min="20" max="300" step="0.1" value="70"></label>
+        <label class="fld"><span>Height (cm)</span><input id="ht" type="number" inputmode="decimal" min="100" max="250" step="0.1" value="170"></label>
+        <p class="eg">These are example values. Type your own.</p>
+      </div>
+      <div class="out" aria-live="polite">
+        <div class="num" id="bnum">--</div>
+        <div class="cat" id="bcat"></div>
+        <p class="msg" id="bmsg"></p>
+        <div class="scale" aria-hidden="true">
+          <div class="track"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i></div>
+          <div class="pin" id="bpin"></div>
+          <span class="tick" style="left:14%">18.5</span>
+          <span class="tick" style="left:40%">25</span>
+          <span class="tick" style="left:60%">30</span>
+        </div>
+      </div>
+    </div>
+    <p class="disc">BMI cannot tell muscle from fat, so a muscular person can score high. For Indian adults, many doctors use lower cutoffs and treat a BMI from 23 as overweight. Ask your trainer at OM Fitness Galaxy Gym for a full body check.</p>
+  </section>
+
+  <footer class="foot">
+    <div>
+      <h2>The week</h2>
+      <ul class="week" id="week"></ul>
+    </div>
+    <address class="visit">
+      <h2>Find us</h2>
+      <p>347/1, KK Puri Colony,<br>Jhansi, Uttar Pradesh 284003</p>
+      <p class="tel"><span id="phone">099180 73166</span> <button class="reset" type="button" id="copyphone">Copy</button></p>
+      <p><a href="https://www.google.com/search?q=om+fitness+galaxy+gym+jhansi+address" target="_blank" rel="noopener">See the address on Google</a></p>
+    </address>
+  </footer>
+</div>
+
+<script>
+var DAYS = [
+  { id: "mon", abbr: "MON", cls: "d-mon", name: "Monday", split: "Push", focus: "Chest + Triceps",
+    muscles: "Pecs, front delts, triceps", time: "60–70 min",
+    warm: "5 min rower, band pull-aparts 2×15, empty-bar bench 2×10, then two ramp-up sets before your first working set.",
+    lifts: [
+      ["Bench Press", "Shoulder blades pinched, bar touches mid-chest, drive feet into the floor.", "4 × 6–8", "2:00"],
+      ["Incline Dumbbell Press", "Bench at 30°. Lower until elbows are just below the bench line.", "4 × 8–10", "1:30"],
+      ["Cable Fly", "Soft elbows, squeeze the handles together at chest height.", "3 × 12–15", "1:00"],
+      ["Triceps Pushdown", "Elbows pinned to your sides, press down until arms are straight.", "3 × 12–15", "1:00"],
+      ["Overhead Triceps Extension", "Elbows pointing forward, lower behind the head for a deep stretch.", "3 × 12", "1:00"]
+    ] },
+  { id: "tue", abbr: "TUE", cls: "d-tue", name: "Tuesday", split: "Pull", focus: "Back + Biceps",
+    muscles: "Lats, rhomboids, rear delts, biceps", time: "60–70 min",
+    warm: "Cat-cow 10 reps, scapular pull-ups 2×8, light lat pulldown 2×12, then ramp up to your working weight.",
+    lifts: [
+      ["Lat Pulldown", "Pull to the upper chest, elbows down and slightly back.", "4 × 8–10", "1:30"],
+      ["Seated Cable Row", "Chest tall, pause for one second at the stomach.", "4 × 10–12", "1:30"],
+      ["Chest-Supported Row", "Chest on the pad, pull elbows back and squeeze the shoulder blades.", "3 × 10–12", "1:15"],
+      ["Dumbbell Curl", "Elbows pinned to your sides, no swinging.", "3 × 10–12", "1:00"],
+      ["Hammer Curl", "Neutral grip, controlled lowering.", "3 × 12", "0:45"]
+    ] },
+  { id: "wed", abbr: "WED", cls: "d-wed", name: "Wednesday", split: "Legs", focus: "Legs + Abs",
+    muscles: "Quads, hamstrings, glutes, calves, abs", time: "70–80 min",
+    warm: "5 min bike, bodyweight squats 2×15, hip openers 1 min each side, empty-bar squat 2×8, then ramp up.",
+    lifts: [
+      ["Squats or Leg Press", "Break at hips and knees together, hit at least parallel. Never lock the knees on the press.", "4 × 8–10", "2:00"],
+      ["Romanian Deadlift", "Soft knees, push hips back until hamstrings stretch, bar stays close.", "3 × 8–10", "2:00"],
+      ["Leg Extension", "Pause for one second at the top, lower slowly.", "3 × 12–15", "1:00"],
+      ["Leg Curl", "Hips down on the pad, curl smoothly and control the return.", "3 × 12", "1:00"],
+      ["Calf Raise", "Full stretch at the bottom, pause at the top.", "4 × 12–15", "0:45"],
+      ["Plank", "Squeeze glutes, ribs down, one straight line.", "3 × 60 sec", "0:45"]
+    ] },
+  { id: "thu", abbr: "THU", cls: "d-thu", name: "Thursday", split: "Push", focus: "Shoulders + Traps",
+    muscles: "Delts, upper traps", time: "55–65 min",
+    warm: "Arm circles 20 each way, band dislocates 2×10, light dumbbell press 2×12, then ramp up.",
+    lifts: [
+      ["Overhead Shoulder Press", "Glutes tight, ribs down, press in a straight line over your head.", "4 × 6–8", "2:00"],
+      ["Lateral Raise", "Lead with the elbows, stop at shoulder height.", "4 × 12–15", "0:45"],
+      ["Rear-Delt Fly", "Chest supported or hinged forward, arms wide.", "3 × 12–15", "0:45"],
+      ["Face Pull", "Rope to forehead height, thumbs pointing behind you.", "3 × 15", "0:45"],
+      ["Dumbbell Shrug", "Straight up and down, hold the top for one second.", "3 × 12–15", "1:00"]
+    ] },
+  { id: "fri", abbr: "FRI", cls: "d-fri", name: "Friday", split: "Upper", focus: "Upper Body",
+    muscles: "Chest, back, shoulders, arms", time: "65–75 min",
+    warm: "5 min rower, band pull-aparts 2×15, arm circles, one light set of the first lift, then ramp up.",
+    lifts: [
+      ["Incline Bench Press", "Bench at 30°, bar to the upper chest, elbows about 45° from the body.", "4 × 6–8", "2:00"],
+      ["Lat Pulldown", "Pull to the upper chest, elbows down and slightly back.", "4 × 8–10", "1:30"],
+      ["Seated Row", "Chest tall, squeeze the shoulder blades together.", "3 × 10–12", "1:15"],
+      ["Lateral Raise", "Lead with the elbows, stop at shoulder height.", "3 × 12–15", "0:45"],
+      ["Biceps Curl", "Elbows pinned to your sides, control the lowering.", "3 × 10–12", "1:00"],
+      ["Triceps Pushdown", "Elbows pinned to your sides, press down until arms are straight.", "3 × 12–15", "1:00"]
+    ] },
+  { id: "sat", abbr: "SAT", cls: "d-sat", name: "Saturday", split: "Lower", focus: "Lower Body + Abs",
+    muscles: "Quads, hamstrings, glutes, calves, abs", time: "55–65 min",
+    warm: "5 min bike, bodyweight squats 2×15, glute bridges 2×15, then a light set of leg press.",
+    lifts: [
+      ["Leg Press", "Feet shoulder width, full range, never lock the knees.", "4 × 10–12", "1:30"],
+      ["Romanian Deadlift", "Soft knees, push hips back until hamstrings stretch, bar stays close.", "3 × 8–10", "2:00"],
+      ["Leg Curl", "Hips down on the pad, curl smoothly and control the return.", "3 × 12", "1:00"],
+      ["Calf Raise", "Full stretch at the bottom, pause at the top.", "4 × 12–15", "0:45"],
+      ["Hanging Knee Raise", "No swing. Curl the pelvis up at the top.", "4 × 12–15", "1:00"]
+    ] }
+];
+
+var CARDIO = {
+  mon: ["Cycling", "20", "Steady ride at a pace where you can still talk. Resistance 6 to 8 on the stationary bike."],
+  tue: ["Running", "20", "Treadmill or outdoor jog. 2 min easy, then 1 min faster, repeated to the end."],
+  wed: ["Cycling", "15", "Easy spin to flush the legs after squats. Keep the resistance low."],
+  thu: ["Running", "20", "Steady jog at an even pace. Finish with 3 min of slow walking."],
+  fri: ["Cycling", "20", "30 sec hard, 90 sec easy, repeated 8 times, then 4 min easy to cool down."],
+  sat: ["Running", "25", "Run 4 min, walk 1 min, repeated 5 times. Stretch your calves and hips after."]
+};
+var KEY = "iron-yard-done";
+var done = {};
+try { done = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { done = {}; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
+
+var todayIdx = (new Date().getDay() + 6) % 7; // Monday = 0, Sunday = 6
+var bar = document.getElementById("bar");
+var sheet = document.getElementById("sheet");
+var week = document.getElementById("week");
+var current = 0;
+
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+function setCount(d) {
+  var n = (done[d.id] || []).length, total = d.lifts.length;
+  sheet.querySelector(".count").textContent = n + " of " + total + " done";
+  sheet.querySelector(".meter i").style.width = Math.round(n / total * 100) + "%";
+}
+
+function render(i) {
+  current = i;
+  var d = DAYS[i];
+  var sets = 0;
+  d.lifts.forEach(function (l) { sets += parseInt(l[2], 10) || 0; });
+  var marks = done[d.id] || [];
+  bar.querySelectorAll(".plate").forEach(function (b, k) { b.setAttribute("aria-selected", k === i ? "true" : "false"); b.tabIndex = k === i ? 0 : -1; });
+  sheet.className = "sheet " + d.cls;
+  sheet.setAttribute("aria-labelledby", "tab-" + d.id);
+  sheet.innerHTML =
+    '<div class="eyebrow"><span class="swatch"></span>Day ' + (i + 1) + ' of 6 · ' + esc(d.name) + ' · ' + esc(d.split) + '</div>' +
+    '<h2 class="focus">' + esc(d.focus) + '</h2>' +
+    '<ul class="facts">' +
+      '<li><b>Muscles</b><span>' + esc(d.muscles) + '</span></li>' +
+      '<li><b>Session</b><span>' + esc(d.time) + '</span></li>' +
+      '<li><b>Working sets</b><span>' + sets + '</span></li>' +
+    '</ul>' +
+    '<p class="warm"><b>Warm-up</b>' + esc(d.warm) + '</p>' +
+    '<div class="progress"><span class="count"></span><div class="meter"><i></i></div><button class="reset" type="button" id="reset">Clear ticks</button></div>' +
+    '<div class="cols" aria-hidden="true"><span></span><span>Lift</span><span>Sets × reps</span><span>Rest</span></div>' +
+    '<ol class="lifts">' +
+    d.lifts.map(function (l, k) {
+      var on = marks.indexOf(k) > -1;
+      return '<li><label class="row' + (on ? ' done' : '') + '">' +
+        '<input type="checkbox" data-k="' + k + '"' + (on ? ' checked' : '') + ' aria-label="Mark ' + esc(l[0]) + ' done">' +
+        '<span class="nm"><strong>' + esc(l[0]) + '</strong><em>' + esc(l[1]) + '</em></span>' +
+        '<span class="sr">' + esc(l[2]) + '</span><span class="rs">' + esc(l[3]) + ' rest</span></label></li>';
+    }).join("") +
+    '</ol>' +
+    '<div class="cardio"><div><b>Cardio · after weights</b><strong>' + esc(CARDIO[d.id][0]) + '</strong></div>' +
+      '<div class="mins">' + CARDIO[d.id][1] + '<small>minutes</small></div>' +
+      '<p>' + esc(CARDIO[d.id][2]) + '</p></div>' +
+    '<p class="note">Choose a weight you could lift two more times than the top of the rep range. Add weight once every set reaches the top of the range with clean form.</p>';
+  setCount(d);
+}
+
+function select(i, focusTab) {
+  render(i);
+  try { history.replaceState(null, "", "#" + DAYS[i].id); } catch (e) {}
+  if (focusTab) bar.children[i].focus();
+}
+
+DAYS.forEach(function (d, i) {
+  var b = document.createElement("button");
+  b.type = "button";
+  b.className = "plate " + d.cls;
+  b.id = "tab-" + d.id;
+  b.setAttribute("role", "tab");
+  b.setAttribute("aria-label", d.name + ", " + d.focus);
+  b.innerHTML = d.abbr + (i === todayIdx ? '<span class="today">today</span>' : "");
+  b.addEventListener("click", function () { select(i, false); });
+  b.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") { e.preventDefault(); select((current + 1) % DAYS.length, true); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); select((current + DAYS.length - 1) % DAYS.length, true); }
+  });
+  bar.appendChild(b);
+  var li = document.createElement("li");
+  li.innerHTML = d.abbr + " " + esc(d.focus);
+  week.appendChild(li);
+});
+var off = document.createElement("li");
+off.className = "off";
+off.textContent = "SUN closed";
+week.appendChild(off);
+
+sheet.addEventListener("change", function (e) {
+  var t = e.target;
+  if (!t.matches || !t.matches('input[type="checkbox"]')) return;
+  var d = DAYS[current], k = parseInt(t.getAttribute("data-k"), 10);
+  var arr = (done[d.id] || []).filter(function (x) { return x !== k; });
+  if (t.checked) arr.push(k);
+  done[d.id] = arr;
+  t.closest(".row").classList.toggle("done", t.checked);
+  save();
+  setCount(d);
+});
+sheet.addEventListener("click", function (e) {
+  if (e.target && e.target.id === "reset") {
+    done[DAYS[current].id] = [];
+    save();
+    render(current);
+  }
+});
+
+/* Diet chart */
+var MEALS = {
+  veg: [
+    ["06:30", "On waking", "1 glass warm water with lemon, 6 soaked almonds."],
+    ["08:00", "Breakfast", "Vegetable poha or 2 besan chilla, with 1 glass milk."],
+    ["11:00", "Mid-morning", "1 fruit (banana or apple) and a handful of roasted chana."],
+    ["13:30", "Lunch", "2 to 3 roti, 1 bowl dal, seasonal sabzi, salad and 1 bowl curd."],
+    ["17:00", "Pre-workout", "1 banana with peanut butter on toast, or black coffee."],
+    ["19:30", "Post-workout", "100 g paneer bhurji or 1 bowl sprouts chaat, with 1 glass milk or a scoop of whey."],
+    ["21:30", "Dinner", "2 roti, soya chunks or paneer curry, sabzi and salad."],
+    ["23:00", "Before bed", "1 glass warm milk."]
+  ],
+  non: [
+    ["06:30", "On waking", "1 glass warm water with lemon, 6 soaked almonds."],
+    ["08:00", "Breakfast", "Omelette of 3 egg whites and 1 whole egg, with 2 brown bread slices or a bowl of oats."],
+    ["11:00", "Mid-morning", "1 fruit and a handful of roasted peanuts."],
+    ["13:30", "Lunch", "2 roti or 1 cup rice, 150 g chicken curry or fish curry with little oil, sabzi and salad."],
+    ["17:00", "Pre-workout", "1 banana and black coffee."],
+    ["19:30", "Post-workout", "2 boiled eggs and 1 fruit, or a scoop of whey with water."],
+    ["21:30", "Dinner", "2 roti, 150 g grilled chicken or fish, dal or sabzi and salad."],
+    ["23:00", "Before bed", "1 glass warm milk or 1 bowl curd."]
+  ]
+};
+var mealsEl = document.getElementById("meals");
+var dv = document.getElementById("dv"), dn = document.getElementById("dn");
+function showMeals(kind) {
+  dv.setAttribute("aria-pressed", kind === "veg" ? "true" : "false");
+  dn.setAttribute("aria-pressed", kind === "non" ? "true" : "false");
+  mealsEl.innerHTML = MEALS[kind].map(function (m) {
+    return '<li><span class="t">' + m[0] + '</span><div><strong>' + esc(m[1]) + '</strong><span class="d">' + esc(m[2]) + '</span></div></li>';
+  }).join("");
+}
+dv.addEventListener("click", function () { showMeals("veg"); });
+dn.addEventListener("click", function () { showMeals("non"); });
+showMeals("veg");
+
+/* BMI */
+var wt = document.getElementById("wt"), ht = document.getElementById("ht");
+var bnum = document.getElementById("bnum"), bcat = document.getElementById("bcat");
+var bmsg = document.getElementById("bmsg"), bpin = document.getElementById("bpin");
+function calcBmi() {
+  var w = parseFloat(wt.value), cm = parseFloat(ht.value);
+  if (!(w >= 20 && w <= 300 && cm >= 100 && cm <= 250)) {
+    bnum.textContent = "--";
+    bcat.textContent = "";
+    bmsg.textContent = "Enter weight in kg (20 to 300) and height in cm (100 to 250).";
+    bpin.style.display = "none";
+    return;
+  }
+  var m = cm / 100, bmi = w / (m * m);
+  var cat, msg;
+  if (bmi < 18.5) { cat = "Underweight"; msg = "Lean toward the muscle-gain side: eat the full diet chart and add a meal or larger portions."; }
+  else if (bmi < 25) { cat = "Normal"; msg = "You are in the healthy range. Keep the portions as listed and train consistently."; }
+  else if (bmi < 30) { cat = "Overweight"; msg = "Keep portions modest, skip fried food and sugary drinks, and walk daily on top of your training."; }
+  else { cat = "Obese"; msg = "Start with the diet chart and shorter, steady sessions. Talk to a doctor and your trainer before pushing hard."; }
+  var lo = 18.5 * m * m, hi = 24.9 * m * m;
+  bnum.textContent = bmi.toFixed(1);
+  bcat.textContent = cat;
+  bmsg.textContent = msg + " Healthy weight for your height: " + lo.toFixed(1) + " to " + hi.toFixed(1) + " kg.";
+  var pct = Math.max(0, Math.min(1, (bmi - 15) / 25)) * 100;
+  bpin.style.display = "block";
+  bpin.style.left = pct + "%";
+}
+wt.addEventListener("input", calcBmi);
+ht.addEventListener("input", calcBmi);
+calcBmi();
+
+var copyBtn = document.getElementById("copyphone");
+copyBtn.addEventListener("click", function () {
+  var el = document.getElementById("phone");
+  function sel() {
+    var r = document.createRange(); r.selectNodeContents(el);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    copyBtn.textContent = "Selected";
+  }
+  try {
+    navigator.clipboard.writeText(el.textContent).then(function () { copyBtn.textContent = "Copied"; }, sel);
+  } catch (e) { sel(); }
+  setTimeout(function () { copyBtn.textContent = "Copy"; }, 2000);
+});
+
+var start = 0;
+var h = (location.hash || "").replace("#", "");
+DAYS.forEach(function (d, i) { if (d.id === h) start = i; });
+render(start);
+</script>
+
+</body></html>
